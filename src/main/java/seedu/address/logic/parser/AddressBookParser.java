@@ -55,7 +55,7 @@ public class AddressBookParser {
             return new DeleteCommandParser().parse(arguments);
 
         case RemarkCommand.COMMAND_WORD:
-              return new RemarkCommand();
+              return new RemarkCommand(index, remark);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
