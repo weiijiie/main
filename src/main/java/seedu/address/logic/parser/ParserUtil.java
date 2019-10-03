@@ -81,15 +81,6 @@ public class ParserUtil {
         return new Address(trimmedAddress);
     }
 
-    public static Remark parseRemark(String remark) throws ParseException {
-        requireNonNull(remark);
-        String trimmedRemark = remark.trim();
-        if (!Remark.isValidRemark(trimmedRemark)) {
-            throw new ParseException(Remark.MESSAGE_CONSTRAINTS);
-        }
-        return new Remark(trimmedRemark);
-    }
-
     /**
      * Parses a {@code String email} into an {@code Email}.
      * Leading and trailing whitespaces will be trimmed.
