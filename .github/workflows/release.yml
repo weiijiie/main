@@ -40,5 +40,5 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./build/jar/billboard.jar
         asset_name: billboard_${{ github.ref }}.jar
-        content_type: application/jar   
+        asset_content_type: application/jar   
     
