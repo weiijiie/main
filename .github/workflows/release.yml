@@ -1,0 +1,44 @@
+name: release
+
+on: 
+  push:
+    branches: 
+      - master
+    tags:
+      - v1.[0-9]+
+
+jobs:
+  release:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup java environment  
+      uses: actions/setup-java@v1
+      with: 
+        java-version: '11.0.1'
+    - name: Build with gradle
+      run: ./gradlew build
+    - name: Run tests and build jar
+      run: ./gradlew checkstyleMain checkstyleTest test shadowJar
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        draft: true
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./build/jar/billboard.jar
+        asset_name: billboard_${{ github.ref }}.jar
+        content_type: application/jar   
+    
